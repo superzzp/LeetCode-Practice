@@ -38,4 +38,4 @@ const recursive = function (nums, left, right, target) {
 
 console.log(search([0,1,-1], -1));
 console.log(search([1,4,-1,0], 0));
-console.log(search([4,5,6,7,0,1,2], 0));
+console.log(search([4,5,6,7,0,1,2], 0));s
