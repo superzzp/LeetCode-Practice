@@ -5,30 +5,39 @@ function ListNode(val, next) {
 }
 
 var addTwoNumbers = function(l1, l2) {
-    const dummyHead = new ListNode(-1);
-    let l = dummyHead;
-    let carry = 0;
+    let nv = 0;
+    let temp = undefined;
+    let head = undefined;
     while (l1 || l2) {
-        sum = 0;
-        if (l1) {
-            sum += l1.val;
+        let sum = 0;
+        if (l1 && l2) {
+            sum = l1.val + l2.val + nv;
+            l1 = l1.next;
+            l2 = l2.next;
+        }else if (l1) {
+            sum = l1.val + nv;
+            l1 = l1.next;
+        }else{
+            sum = l2.val + nv;
+            l2 = l2.next;
         }
-        if (l2) {
-            sum += l2.val;
+        let c = sum % 10;
+        let cnode = new ListNode(c);
+        nv = Math.floor(sum/10);
+        if (temp) { //error 1: use temp pointer, return head
+            temp.next = cnode;
+            temp = temp.next;
+        }else{
+            temp = cnode;
+            head = temp;
         }
-        sum += carry;
-        l.next = new ListNode(sum % 10);
-        carry = parseInt(sum/10);
-        l = l.next;
-        l1 = l1.next;
-        l2 = l2.next;
     }
-    if (carry !== 0) {
-        l.next = ListNode(carry);
-    }
-    return dummyHead.next;
+    //Error 2: check nv in the end
+    if (nv !== 0) {
+        temp.next = new ListNode(nv);
+    }//Error end
+    return head;
 };
-
 
 // NOT RELATED ALBEIT THE RIGHT WAY TO REVERSE A LINKED LIST
 var reverseList = function (l) {
@@ -45,3 +54,6 @@ var reverseList = function (l) {
 
 //Optimization: 
 
+l1 = new ListNode(2, (new ListNode(4, new ListNode(3))));
+l2 = new ListNode(5, (new ListNode(6, new ListNode(4))));
+addTwoNumbers(l1, l2)
